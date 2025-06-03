@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const CharacterInfoStyled = styled.div`
+const CharacterInfoWrapper = styled.div`
   padding: 25px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
   position: relative;
@@ -8,7 +8,7 @@ const CharacterInfoStyled = styled.div`
   background-color: #fff;
 `;
 
-const Basics = styled.div`
+const BasicsWrapper = styled.div`
   display: grid;
   grid-template-columns: 150px auto;
   column-gap: 25px;
@@ -34,7 +34,7 @@ const Description = styled.p`
   line-height: 18px;
 `;
 
-const Comics = styled.div`
+const ComicsLabel = styled.div`
   font-weight: bold;
   font-size: 18px;
   line-height: 24px;
@@ -55,11 +55,11 @@ const ComicsItem = styled.li`
 `;
 
 export {
-  CharacterInfoStyled,
-  Basics,
+  CharacterInfoWrapper,
+  BasicsWrapper,
   ButtonsWrapper,
   Description,
-  Comics,
+  ComicsLabel,
   ComicsList,
   ComicsItem,
 };

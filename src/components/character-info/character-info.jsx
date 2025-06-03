@@ -1,14 +1,14 @@
 import {
-  CharacterInfoStyled,
-  Basics,
+  CharacterInfoWrapper,
+  BasicsWrapper,
   ButtonsWrapper,
   Description,
-  Comics,
+  ComicsLabel,
   ComicsList,
   ComicsItem,
 } from "./character-info-styled";
 import { Name } from "../random-char/random-char-styled";
-import { Button } from "../shared/button/button-styled";
+import { Button } from "../../styles/button/button-styled.js";
 
 import Skeleton from "../skeleton/skeleton";
 
@@ -16,8 +16,8 @@ import thor from "../../resources/img/thor.jpeg";
 
 function CharacterInfo() {
   return (
-    <CharacterInfoStyled>
-      <Basics>
+    <CharacterInfoWrapper>
+      <BasicsWrapper>
         <img src={thor} alt="abyss" />
         <div>
           <Name>thor</Name>
@@ -30,7 +30,7 @@ function CharacterInfo() {
             </Button>
           </ButtonsWrapper>
         </div>
-      </Basics>
+      </BasicsWrapper>
       <Description>
         In Norse mythology, Loki is a god or jötunn (or both). Loki is the son
         of Fárbauti and Laufey, and the brother of Helblindi and Býleistr. By
@@ -40,7 +40,7 @@ function CharacterInfo() {
         the form of a mare—to the eight-legged horse Sleipnir. In addition, Loki
         is referred to as the father of Váli in the Prose Edda.
       </Description>
-      <Comics>Comics:</Comics>
+      <ComicsLabel>Comics:</ComicsLabel>
       <ComicsList>
         <ComicsItem>All-Winners Squad: Band of Heroes (2011) #3</ComicsItem>
         <ComicsItem>Amazing Spider-Man (1999) #503</ComicsItem>
@@ -59,7 +59,7 @@ function CharacterInfo() {
         <ComicsItem>Avengers (1996) #1</ComicsItem>
       </ComicsList>
       <Skeleton />
-    </CharacterInfoStyled>
+    </CharacterInfoWrapper>
   );
 }
 

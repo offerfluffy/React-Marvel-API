@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const RandomCharStyled = styled.div`
+const RandomCharWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 50%);
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
@@ -12,7 +12,7 @@ const ButtonsWrapper = styled.div`
   }
 `;
 
-const Block = styled.div`
+const Dynamic = styled.div`
   padding: 40px 35px;
   display: grid;
   grid-template-columns: 180px auto;
@@ -69,8 +69,8 @@ const Title = styled.p`
 `;
 
 export {
-  RandomCharStyled,
-  Block,
+  RandomCharWrapper,
+  Dynamic,
   Image,
   Info,
   Name,

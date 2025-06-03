@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Name as NameSuper } from "../random-char/random-char-styled";
-import { Button } from "../shared/button/button-styled";
+import { Button } from "../../styles/button/button-styled.js";
 
 const Grid = styled.ul`
   display: grid;

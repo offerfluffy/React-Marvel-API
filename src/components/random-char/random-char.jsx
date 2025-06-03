@@ -1,6 +1,6 @@
 import {
-  RandomCharStyled,
-  Block,
+  RandomCharWrapper,
+  Dynamic,
   Image,
   Info,
   Name,
@@ -10,15 +10,15 @@ import {
   Title,
   Decoration,
 } from "./random-char-styled";
-import { Button } from "../shared/button/button-styled";
+import { Button } from "../../styles/button/button-styled.js";
 
 import thor from "../../resources/img/thor.jpeg";
 import mjolnir from "../../resources/img/mjolnir.png";
 
 function RandomChar() {
   return (
-    <RandomCharStyled>
-      <Block>
+    <RandomCharWrapper>
+      <Dynamic>
         <Image src={thor} alt="Random character" />
         <Info>
           <Name>Thor</Name>
@@ -37,7 +37,7 @@ function RandomChar() {
             </Button>
           </ButtonsWrapper>
         </Info>
-      </Block>
+      </Dynamic>
       <Static>
         <Title>
           Random character for today!
@@ -46,11 +46,11 @@ function RandomChar() {
         </Title>
         <Title>Or choose another one</Title>
         <Button href="#" $type="main">
-          <div className="inner">homepage</div>
+          <div className="inner">try it</div>
         </Button>
         <Decoration src={mjolnir} alt="mjolnir" />
       </Static>
-    </RandomCharStyled>
+    </RandomCharWrapper>
   );
 }
 
