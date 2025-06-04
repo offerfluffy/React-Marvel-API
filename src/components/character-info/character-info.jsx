@@ -8,7 +8,7 @@ import {
   ComicsItem,
 } from "./character-info-styled";
 import { Name } from "../random-char/random-char-styled";
-import { Button } from "../../styles/button/button-styled.js";
+import { Button } from "../../style/button/button-styled.js";
 
 import Skeleton from "../skeleton/skeleton";
 

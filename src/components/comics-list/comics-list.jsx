@@ -5,7 +5,7 @@ import {
   Name,
   Price,
 } from "./comics-list-styled";
-import { ButtonLong } from "../../styles/button/button-styled";
+import { ButtonLong } from "../../style/button/button-styled";
 
 import uw from "../../resources/img/UW.png";
 import xMen from "../../resources/img/x-men.png";
