@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Name as NameSuper } from "../random-char/random-char-styled";
-import { Button } from "../../styles/button/button-styled.js";
 
 const Grid = styled.ul`
   display: grid;
@@ -35,10 +34,4 @@ const Name = styled(NameSuper)`
   color: #fff;
 `
 
-const ButtonLong = styled(Button)`
-    display: block;
-  width: 170px;
-  margin: 45px auto 0 auto;
-`
-
-export { Grid, Item, Selected, Name, ButtonLong};
+export { Grid, Item, Selected, Name};

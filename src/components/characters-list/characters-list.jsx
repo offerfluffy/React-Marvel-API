@@ -1,10 +1,5 @@
-import {
-  Grid,
-  Item,
-  Selected,
-  Name,
-  ButtonLong,
-} from "./characters-list-styled";
+import { Grid, Item, Selected, Name } from "./characters-list-styled";
+import { ButtonLong } from "../../styles/button/button-styled";
 
 import abyss from "../../resources/img/abyss.jpg";
 

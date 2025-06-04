@@ -15,7 +15,7 @@ const getColors = (type) => {
   };
 };
 
-export const Button = styled.a`
+const Button = styled.a`
   min-width: 101px;
   color: #fff;
   text-align: center;
@@ -79,3 +79,11 @@ export const Button = styled.a`
     }
   }
 `;
+
+const ButtonLong = styled(Button)`
+  display: block;
+  width: 170px;
+  margin: 45px auto 0 auto;
+`;
+
+export { Button, ButtonLong };
