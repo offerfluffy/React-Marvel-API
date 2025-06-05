@@ -20,7 +20,6 @@ import MarvelService from "../../services/marvel-service.js";
 class CharacterInfo extends Component {
   state = {
     char: {},
-    comics: [],
     loading: true,
     error: false,
   };
@@ -36,8 +35,8 @@ class CharacterInfo extends Component {
     }
   }
 
-  onInfoLoaded = (char, comics) => {
-    this.setState({ char, comics, loading: false });
+  onInfoLoaded = (char) => {
+    this.setState({ char, loading: false });
   };
 
   onError = () => {
@@ -47,31 +46,25 @@ class CharacterInfo extends Component {
   updateInfo = (id) => {
     this.setState({ loading: true, error: false });
 
-    Promise.allSettled([
-      this.marvelService.getCharacter(id),
-      this.marvelService.getComics(id),
-    ]).then(([charResult, comicsResult]) => {
-      if (
-        charResult.status === "fulfilled" &&
-        comicsResult.status === "fulfilled"
-      ) {
-        this.onInfoLoaded(charResult.value, comicsResult.value);
-      } else {
-        this.onError();
-      }
-    });
+    this.marvelService
+      .getCharacter(id)
+      .then((char) => {
+        this.onInfoLoaded(char);
+      })
+      .catch(this.onError);
   };
+
   render() {
     const {
-      char: { name, thumbnail, description, homepage, wiki },
-      comics,
+      char,
+      char: { comics },
       loading,
       error,
     } = this.state;
 
-    const items = comics.map(({ id, title }) => (
-      <ComicsItem key={id}>{title}</ComicsItem>
-    ));
+    const items = comics
+      ?.slice(0, 10)
+      .map((item, i) => <ComicsItem key={i}>{item.name}</ComicsItem>);
 
     return (
       <CharacterInfoWrapper>
@@ -80,24 +73,23 @@ class CharacterInfo extends Component {
         ) : error ? (
           <ErrorMessage />
         ) : (
-          <View
-            thumbnail={thumbnail}
-            name={name}
-            homepage={homepage}
-            wiki={wiki}
-            description={description}
-            items={items}
-          />
+          <View char={char} items={items} />
         )}
       </CharacterInfoWrapper>
     );
   }
 }
 
-function View({ thumbnail, name, homepage, wiki, description, items }) {
+function View({
+  char: { thumbnail, name, homepage, wiki, description },
+  items,
+}) {
+  const noImage =
+    thumbnail ===
+    "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
   return (
     <>
-      <BasicsWrapper>
+      <BasicsWrapper $contain={noImage}>
         <img src={thumbnail} alt="abyss" />
         <div>
           <Name>{name}</Name>
@@ -111,9 +103,13 @@ function View({ thumbnail, name, homepage, wiki, description, items }) {
           </ButtonsWrapper>
         </div>
       </BasicsWrapper>
-      <Description>{description}</Description>
+      <Description>
+        {description ? description : "No description..."}
+      </Description>
       <ComicsLabel>Comics:</ComicsLabel>
-      <ComicsList>{items}</ComicsList>
+      <ComicsList>
+        {items && items.length > 0 ? items : "No comics..."}
+      </ComicsList>
     </>
   );
 }

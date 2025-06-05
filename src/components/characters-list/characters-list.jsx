@@ -40,16 +40,23 @@ class CharacterList extends Component {
     const { charList, loading, error } = this.state;
     const { onSelectChar, selectedId } = this.props;
 
-    const items = charList.map(({ id, name, thumbnail }) => (
-      <Item
-        className={selectedId === id ? "selected" : ""}
-        onClick={() => onSelectChar(id)}
-        key={id}
-      >
-        <img src={thumbnail} alt={name} />
-        <Name>{name}</Name>
-      </Item>
-    ));
+    const items = charList.map(({ id, name, thumbnail }) => {
+      const noImage =
+        thumbnail ===
+        "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
+
+      return (
+        <Item
+          className={selectedId === id ? "selected" : ""}
+          onClick={() => onSelectChar(id)}
+          $fill={noImage}
+          key={id}
+        >
+          <img src={thumbnail} alt={name} />
+          <Name>{name}</Name>
+        </Item>
+      );
+    });
 
     return (
       <div>

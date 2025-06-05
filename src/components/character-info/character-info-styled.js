@@ -16,7 +16,7 @@ const BasicsWrapper = styled.div`
   img {
     width: 150px;
     height: 150px;
-    object-fit: cover;
+    object-fit: ${(props) => (props.$contain ? "contain" : "cover")};
   }
 `;
 

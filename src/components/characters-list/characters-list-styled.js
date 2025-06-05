@@ -20,7 +20,7 @@ const Item = styled.li`
   img {
     width: 200px;
     height: 200px;
-    object-fit: cover;
+    object-fit: ${(props) => (props.$fill ? "fill" : "cover")};
     transform: translate(-15px, -15px);
   }
 

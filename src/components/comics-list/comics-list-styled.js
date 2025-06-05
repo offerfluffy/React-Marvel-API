@@ -23,7 +23,7 @@ const Item = styled.li`
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
     width: 225px;
     height: 345px;
-    object-fit: cover;
+    object-fit: ${(props) => (props.$contain ? "contain" : "cover")};
   }
 `;
 const Name = styled.div`

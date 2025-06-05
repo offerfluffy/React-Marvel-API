@@ -45,7 +45,7 @@ class RandomChar extends Component {
   updateChar = () => {
     this.setState({ loading: true, error: false });
 
-    const id = Math.floor(Math.random() * (20 - 1) + 1);
+    const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
     this.marvelService
       .getCharacter(id)
       .then(this.onCharLoaded)
@@ -85,10 +85,13 @@ function View({ char }) {
   const { name, description, thumbnail, homepage, wiki } = char;
   const shorten = (text, max = 100) =>
     text && text.length > max ? text.slice(0, max) + "..." : text;
+  const noImage =
+    thumbnail ===
+    "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
 
   return (
     <Dynamic>
-      <Image src={thumbnail} alt="Random character" />
+      <Image src={thumbnail} alt="Random character" $contain={noImage}/>
       <Info>
         <Name>{name}</Name>
         <Description>

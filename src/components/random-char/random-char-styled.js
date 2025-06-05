@@ -28,14 +28,14 @@ const Static = styled.div`
 const Image = styled.img`
   width: 180px;
   height: 180px;
-  object-fit: cover;
+  object-fit: ${(props) => (props.$contain ? "contain" : "cover")};
 `;
 
 const Decoration = styled.img`
   position: absolute;
   bottom: 14px;
   right: -37px;
-`
+`;
 
 const Info = styled.div`
   display: grid;
@@ -78,5 +78,5 @@ export {
   ButtonsWrapper,
   Static,
   Title,
-  Decoration
+  Decoration,
 };

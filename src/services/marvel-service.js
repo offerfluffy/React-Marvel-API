@@ -1,5 +1,5 @@
 class MarvelService {
-  _apiBase = "https://marvel-server-zeta.vercel.app/";
+  _apiBase = "https://gateway.marvel.com:443/v1/public/";
   _apiKey = `apikey=${process.env.REACT_APP_API_KEY}`;
 
   getResource = async (url) => {
@@ -12,7 +12,7 @@ class MarvelService {
     return await res.json();
   };
 
-  getAllCharacters = async (limit = 9, offset = 0) => {
+  getAllCharacters = async (limit = 9, offset = 290) => {
     const res = await this.getResource(
       `${this._apiBase}characters?limit=${limit}&offset=${offset}&${this._apiKey}`
     );
@@ -26,7 +26,7 @@ class MarvelService {
     return this._transfromCharacter(res.data.results[0]);
   };
 
-  getComics = async (id = 10, limit = 9) => {
+  getComics = async (id, limit = 9) => {
     const res = await this.getResource(
       `${this._apiBase}comics/?$id=${id}&limit=${limit}&${this._apiKey}`
     );
@@ -41,6 +41,7 @@ class MarvelService {
     thumbnail: char.thumbnail.path + "." + char.thumbnail.extension,
     homepage: char.urls[0].url,
     wiki: char.urls[1].url,
+    comics: char.comics.items,
   });
 
   _transfromComics = (comics) => ({
