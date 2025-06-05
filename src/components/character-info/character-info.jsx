@@ -11,55 +11,110 @@ import { Name } from "../random-char/random-char-styled";
 import { Button } from "../../style/button/button-styled.js";
 
 import Skeleton from "../skeleton/skeleton";
+import ErrorMessage from "../error-message/error-message.jsx";
 
-import thor from "../../resources/img/thor.jpeg";
+import { Component } from "react";
 
-function CharacterInfo() {
+import MarvelService from "../../services/marvel-service.js";
+
+class CharacterInfo extends Component {
+  state = {
+    char: {},
+    comics: [],
+    loading: true,
+    error: false,
+  };
+
+  marvelService = new MarvelService();
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.selectedId !== prevProps.selectedId &&
+      this.props.selectedId
+    ) {
+      this.updateInfo(this.props.selectedId);
+    }
+  }
+
+  onInfoLoaded = (char, comics) => {
+    this.setState({ char, comics, loading: false });
+  };
+
+  onError = () => {
+    this.setState({ loading: false, error: true });
+  };
+
+  updateInfo = (id) => {
+    this.setState({ loading: true, error: false });
+
+    Promise.allSettled([
+      this.marvelService.getCharacter(id),
+      this.marvelService.getComics(id),
+    ]).then(([charResult, comicsResult]) => {
+      if (
+        charResult.status === "fulfilled" &&
+        comicsResult.status === "fulfilled"
+      ) {
+        this.onInfoLoaded(charResult.value, comicsResult.value);
+      } else {
+        this.onError();
+      }
+    });
+  };
+  render() {
+    const {
+      char: { name, thumbnail, description, homepage, wiki },
+      comics,
+      loading,
+      error,
+    } = this.state;
+
+    const items = comics.map(({ id, title }) => (
+      <ComicsItem key={id}>{title}</ComicsItem>
+    ));
+
+    return (
+      <CharacterInfoWrapper>
+        {loading ? (
+          <Skeleton />
+        ) : error ? (
+          <ErrorMessage />
+        ) : (
+          <View
+            thumbnail={thumbnail}
+            name={name}
+            homepage={homepage}
+            wiki={wiki}
+            description={description}
+            items={items}
+          />
+        )}
+      </CharacterInfoWrapper>
+    );
+  }
+}
+
+function View({ thumbnail, name, homepage, wiki, description, items }) {
   return (
-    <CharacterInfoWrapper>
+    <>
       <BasicsWrapper>
-        <img src={thor} alt="abyss" />
+        <img src={thumbnail} alt="abyss" />
         <div>
-          <Name>thor</Name>
+          <Name>{name}</Name>
           <ButtonsWrapper>
-            <Button href="#" $type="main">
+            <Button href={homepage} $type="main">
               <div className="inner">homepage</div>
             </Button>
-            <Button href="#" $type="secondary">
+            <Button href={wiki} $type="secondary">
               <div className="inner">Wiki</div>
             </Button>
           </ButtonsWrapper>
         </div>
       </BasicsWrapper>
-      <Description>
-        In Norse mythology, Loki is a god or jötunn (or both). Loki is the son
-        of Fárbauti and Laufey, and the brother of Helblindi and Býleistr. By
-        the jötunn Angrboða, Loki is the father of Hel, the wolf Fenrir, and the
-        world serpent Jörmungandr. By Sigyn, Loki is the father of Nari and/or
-        Narfi and with the stallion Svaðilfari as the father, Loki gave birth—in
-        the form of a mare—to the eight-legged horse Sleipnir. In addition, Loki
-        is referred to as the father of Váli in the Prose Edda.
-      </Description>
+      <Description>{description}</Description>
       <ComicsLabel>Comics:</ComicsLabel>
-      <ComicsList>
-        <ComicsItem>All-Winners Squad: Band of Heroes (2011) #3</ComicsItem>
-        <ComicsItem>Amazing Spider-Man (1999) #503</ComicsItem>
-        <ComicsItem>Amazing Spider-Man (1999) #504</ComicsItem>
-        <ComicsItem>
-          AMAZING SPIDER-MAN VOL. 7: BOOK OF EZEKIEL TPB (Trade Paperback)
-        </ComicsItem>
-        <ComicsItem>
-          Amazing-Spider-Man: Worldwide Vol. 8 (Trade Paperback)
-        </ComicsItem>
-        <ComicsItem>
-          Asgardians Of The Galaxy Vol. 2: War Of The Realms (Trade Paperback)
-        </ComicsItem>
-        <ComicsItem>Vengeance (2011) #4</ComicsItem>
-        <ComicsItem>Avengers (1963) #1</ComicsItem>
-        <ComicsItem>Avengers (1996) #1</ComicsItem>
-      </ComicsList>
-      <Skeleton />
-    </CharacterInfoWrapper>
+      <ComicsList>{items}</ComicsList>
+    </>
   );
 }
 

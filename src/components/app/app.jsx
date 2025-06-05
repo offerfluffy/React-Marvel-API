@@ -8,30 +8,46 @@ import SingleComics from "../single-comics/single-comics";
 import { MainWrapper, CharactersWrapper, Decoration } from "./app-styled";
 
 import vision from "../../resources/img/vision.png";
-function App() {
-  return (
-    <>
-      <AppHeader />
-      <MainWrapper>
-        <RandomChar />
-        <CharactersWrapper>
-          <CharacterList />
-          <CharacterInfo />
-        </CharactersWrapper>
-        <Decoration src={vision} />
-      </MainWrapper>
+import { Component } from "react";
+class App extends Component {
+  state = {
+    selectedId: null,
+  };
 
-      {/* <MainWrapper>
-        <AppBanner />
-        <ComicsList />
-      </MainWrapper>
+  onSelectChar = (id) => {
+    this.setState({ selectedId: id });
+  };
 
-      <MainWrapper>
-        <AppBanner />
-        <SingleComics />
-      </MainWrapper> */}
-    </>
-  );
+  render() {
+    const { selectedId } = this.state;
+
+    return (
+      <>
+        <AppHeader />
+        <MainWrapper>
+          <RandomChar />
+          <CharactersWrapper>
+            <CharacterList
+              onSelectChar={this.onSelectChar}
+              selectedId={selectedId}
+            />
+            <CharacterInfo selectedId={selectedId} />
+          </CharactersWrapper>
+          <Decoration src={vision} />
+        </MainWrapper>
+
+        {/* <MainWrapper>
+          <AppBanner />
+          <ComicsList />
+        </MainWrapper>
+  
+        <MainWrapper>
+          <AppBanner />
+          <SingleComics />
+        </MainWrapper> */}
+      </>
+    );
+  }
 }
 
 export default App;

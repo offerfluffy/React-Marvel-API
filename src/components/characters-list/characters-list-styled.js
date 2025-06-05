@@ -23,15 +23,15 @@ const Item = styled.li`
     object-fit: cover;
     transform: translate(-15px, -15px);
   }
-`;
 
-const Selected = styled(Item)`
-  box-shadow: 0 5px 20px #9f0013;
-  transform: translateY(-8px);
+  &.selected {
+    box-shadow: 0 5px 20px #9f0013;
+    transform: translateY(-8px);
+  }
 `;
 
 const Name = styled(NameSuper)`
   color: #fff;
-`
+`;
 
-export { Grid, Item, Selected, Name};
+export { Grid, Item, Name };

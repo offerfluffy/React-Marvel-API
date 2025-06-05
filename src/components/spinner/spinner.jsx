@@ -10,7 +10,7 @@ function Spinner() {
         height="200"
         style={{
           display: "block",
-          margin: "auto auto",
+          margin: "auto",
           background: "rgb(255, 255, 255)",
         }}
       >

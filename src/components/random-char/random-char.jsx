@@ -22,11 +22,6 @@ import ErrorMessage from "../error-message/error-message.jsx";
 import MarvelService from "../../services/marvel-service.js";
 
 class RandomChar extends Component {
-  constructor(props) {
-    super(props);
-    this.updateChar();
-  }
-
   state = {
     char: {},
     loading: true,
@@ -34,6 +29,10 @@ class RandomChar extends Component {
   };
 
   marvelService = new MarvelService();
+
+  componentDidMount() {
+    this.updateChar();
+  }
 
   onCharLoaded = (char) => {
     this.setState({ char, loading: false });
@@ -44,6 +43,8 @@ class RandomChar extends Component {
   };
 
   updateChar = () => {
+    this.setState({ loading: true, error: false });
+
     const id = Math.floor(Math.random() * (20 - 1) + 1);
     this.marvelService
       .getCharacter(id)
@@ -70,7 +71,7 @@ class RandomChar extends Component {
             Do you want to get to know him better?
           </Title>
           <Title>Or choose another one</Title>
-          <Button href="#" $type="main">
+          <Button onClick={this.updateChar} href="#" $type="main">
             <div className="inner">try it</div>
           </Button>
           <Decoration src={mjolnir} alt="mjolnir" />
