@@ -9,6 +9,7 @@ import { MainWrapper, CharactersWrapper, Decoration } from "./app-styled";
 
 import vision from "../../resources/img/vision.png";
 import { Component } from "react";
+import ErrorBoundary from "../error-boundary/error-boundary";
 class App extends Component {
   state = {
     selectedId: null,
@@ -31,7 +32,9 @@ class App extends Component {
               onSelectChar={this.onSelectChar}
               selectedId={selectedId}
             />
-            <CharacterInfo selectedId={selectedId} />
+            <ErrorBoundary>
+              <CharacterInfo selectedId={selectedId} />
+            </ErrorBoundary>
           </CharactersWrapper>
           <Decoration src={vision} />
         </MainWrapper>

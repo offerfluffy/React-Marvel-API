@@ -63,7 +63,7 @@ class CharacterInfo extends Component {
     } = this.state;
 
     const items = comics
-      ?.slice(0, 10)
+      ?.slice(0, 10) // ?. avoids runtime errors if comics is undefined
       .map((item, i) => <ComicsItem key={i}>{item.name}</ComicsItem>);
 
     return (
@@ -87,6 +87,7 @@ function View({
   const noImage =
     thumbnail ===
     "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
+
   return (
     <>
       <BasicsWrapper $contain={noImage}>

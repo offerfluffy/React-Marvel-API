@@ -83,6 +83,7 @@ class RandomChar extends Component {
 
 function View({ char }) {
   const { name, description, thumbnail, homepage, wiki } = char;
+  
   const shorten = (text, max = 100) =>
     text && text.length > max ? text.slice(0, max) + "..." : text;
   const noImage =
