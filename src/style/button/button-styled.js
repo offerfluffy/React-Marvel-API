@@ -26,6 +26,12 @@ const Button = styled.a`
   background-color: transparent;
   cursor: pointer;
   display: inline-block;
+  ${(props) =>
+    props.disabled
+      ? `
+    pointer-events: none;
+    filter: grayscale(0.5);`
+      : null}
 
   &:hover {
     transform: translateY(-5px);
@@ -81,7 +87,7 @@ const Button = styled.a`
 `;
 
 const ButtonLong = styled(Button)`
-  display: block;
+display: block;
   width: 170px;
   margin: 45px auto 0 auto;
 `;

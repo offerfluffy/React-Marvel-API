@@ -13,31 +13,51 @@ class CharacterList extends Component {
     charList: [],
     loading: true,
     error: false,
+    loadingNewItem: false,
+    offset: 291,
+    charEnded: false,
   };
 
   marvelService = new MarvelService();
 
   componentDidMount() {
-    this.updateList();
+    this.onRequest();
   }
 
   onListLoaded = (res) => {
-    this.setState({ charList: res, loading: false });
+    let ended = false;
+    if (res.length < 9) {
+      ended = true;
+    }
+
+    this.setState(({ charList, offset }) => ({
+      charList: [...charList, ...res],
+      loading: false,
+      loadingNewItem: false,
+      offset: offset + 9,
+      charEnded: ended,
+    }));
+  };
+
+  onListLoading = () => {
+    this.setState({ loadingNewItem: true });
   };
 
   onError = (e) => {
     this.setState({ loading: false, error: true });
   };
 
-  updateList = () => {
+  onRequest = (offset) => {
+    this.onListLoading();
     this.marvelService
-      .getAllCharacters()
+      .getAllCharacters(offset)
       .then(this.onListLoaded)
       .catch(this.onError);
   };
 
   render() {
-    const { charList, loading, error } = this.state;
+    const { charList, loading, error, offset, loadingNewItem, charEnded } =
+      this.state;
     const { onSelectChar, selectedId } = this.props;
 
     const items = charList.map(({ id, name, thumbnail }) => {
@@ -67,9 +87,15 @@ class CharacterList extends Component {
         ) : (
           <Grid>{items}</Grid>
         )}
-        <ButtonLong href="#" $type="main">
-          <div className="inner">Load More</div>
-        </ButtonLong>
+        {charEnded ? null : (
+          <ButtonLong
+            onClick={() => this.onRequest(offset)}
+            disabled={loadingNewItem}
+            $type="main"
+          >
+            <div className="inner">Load More</div>
+          </ButtonLong>
+        )}
       </div>
     );
   }
