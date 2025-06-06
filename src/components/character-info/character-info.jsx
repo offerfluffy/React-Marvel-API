@@ -13,6 +13,8 @@ import { Button } from "../../style/button/button-styled.js";
 import Skeleton from "../skeleton/skeleton";
 import ErrorMessage from "../error-message/error-message.jsx";
 
+import PropTypes from "prop-types";
+
 import { Component } from "react";
 
 import MarvelService from "../../services/marvel-service.js";
@@ -114,5 +116,9 @@ function View({
     </>
   );
 }
+
+CharacterInfo.propTypes = {
+  selectedId: PropTypes.number.isRequired,
+};
 
 export default CharacterInfo;

@@ -6,6 +6,8 @@ import ErrorMessage from "../error-message/error-message.jsx";
 
 import MarvelService from "../../services/marvel-service.js";
 
+import PropTypes from "prop-types";
+
 import { Component } from "react";
 
 class CharacterList extends Component {
@@ -100,5 +102,10 @@ class CharacterList extends Component {
     );
   }
 }
+
+CharacterList.propTypes = {
+  onSelectChar: PropTypes.func.isRequired,
+  selectedId: PropTypes.number.isRequired,
+};
 
 export default CharacterList;
