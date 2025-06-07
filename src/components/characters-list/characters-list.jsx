@@ -19,6 +19,7 @@ class CharacterList extends Component {
     offset: 291,
     charEnded: false,
   };
+  itemRefs = [];
 
   marvelService = new MarvelService();
 
@@ -60,17 +61,24 @@ class CharacterList extends Component {
   render() {
     const { charList, loading, error, offset, loadingNewItem, charEnded } =
       this.state;
-    const { onSelectChar, selectedId } = this.props;
+    const { onSelectChar } = this.props;
 
-    const items = charList.map(({ id, name, thumbnail }) => {
+    const items = charList.map(({ id, name, thumbnail }, index) => {
       const noImage =
         thumbnail ===
         "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
 
+
+      // ref is not recommended because of declarative style of react
+      // className={selectedId === id ? "selected" : ""} is better
       return (
         <Item
-          className={selectedId === id ? "selected" : ""}
-          onClick={() => onSelectChar(id)}
+          ref={(el) => (this.itemRefs[index] = el)}
+          onClick={() => {
+            onSelectChar(id);
+            this.itemRefs.forEach((ref) => ref?.classList.remove("selected"));
+            this.itemRefs[index]?.classList.add("selected");
+          }}
           $fill={noImage}
           key={id}
         >

@@ -28,10 +28,7 @@ class App extends Component {
         <MainWrapper>
           <RandomChar />
           <CharactersWrapper>
-            <CharacterList
-              onSelectChar={this.onSelectChar}
-              selectedId={selectedId}
-            />
+            <CharacterList onSelectChar={this.onSelectChar} />
             <ErrorBoundary>
               <CharacterInfo selectedId={selectedId} />
             </ErrorBoundary>
