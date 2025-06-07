@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/marvel-app/static/css/main.df298829.css",
-    "main.js": "/marvel-app/static/js/main.c8947c57.js",
-    "static/media/x-men.png": "/marvel-app/static/media/x-men.41b39e1944f148b7a123.png",
-    "static/media/UW.png": "/marvel-app/static/media/UW.422636b41d853d832a20.png",
-    "static/media/vision.png": "/marvel-app/static/media/vision.067d4ae1936d64a577ce.png",
-    "static/media/mjolnir.png": "/marvel-app/static/media/mjolnir.61f31e1809f12183a524.png",
-    "static/media/Avengers.png": "/marvel-app/static/media/Avengers.4065c8f9c94e3d8b039a.png",
-    "static/media/error.gif": "/marvel-app/static/media/error.42292aa12b6bc303ce99.gif",
-    "static/media/Avengers_logo.png": "/marvel-app/static/media/Avengers_logo.9eaf219344d83362e830.png",
-    "index.html": "/marvel-app/index.html",
-    "main.df298829.css.map": "/marvel-app/static/css/main.df298829.css.map",
-    "main.c8947c57.js.map": "/marvel-app/static/js/main.c8947c57.js.map"
+    "main.css": "/React-Marvel-API/static/css/main.df298829.css",
+    "main.js": "/React-Marvel-API/static/js/main.26c3f771.js",
+    "static/media/x-men.png": "/React-Marvel-API/static/media/x-men.41b39e1944f148b7a123.png",
+    "static/media/UW.png": "/React-Marvel-API/static/media/UW.422636b41d853d832a20.png",
+    "static/media/vision.png": "/React-Marvel-API/static/media/vision.067d4ae1936d64a577ce.png",
+    "static/media/mjolnir.png": "/React-Marvel-API/static/media/mjolnir.61f31e1809f12183a524.png",
+    "static/media/Avengers.png": "/React-Marvel-API/static/media/Avengers.4065c8f9c94e3d8b039a.png",
+    "static/media/error.gif": "/React-Marvel-API/static/media/error.42292aa12b6bc303ce99.gif",
+    "static/media/Avengers_logo.png": "/React-Marvel-API/static/media/Avengers_logo.9eaf219344d83362e830.png",
+    "index.html": "/React-Marvel-API/index.html",
+    "main.df298829.css.map": "/React-Marvel-API/static/css/main.df298829.css.map",
+    "main.26c3f771.js.map": "/React-Marvel-API/static/js/main.26c3f771.js.map"
   },
   "entrypoints": [
     "static/css/main.df298829.css",
-    "static/js/main.c8947c57.js"
+    "static/js/main.26c3f771.js"
   ]
 }
