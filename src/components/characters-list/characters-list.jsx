@@ -4,7 +4,7 @@ import { ButtonLong } from "../../style/button/button-styled";
 import Spinner from "../spinner/spinner";
 import ErrorMessage from "../error-message/error-message.jsx";
 
-import MarvelService from "../../services/marvel-service.js";
+import useMarvelService from "../../services/marvel-service.js";
 
 import PropTypes from "prop-types";
 
@@ -12,9 +12,7 @@ import { useState, useEffect, useRef } from "react";
 
 const CharacterList = (props) => {
   const [charList, setCharList] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [loadingNewItem, setloadingNewItem] = useState(false);
-  const [error, setError] = useState(false);
   const [offset, setOffset] = useState(291);
   const [charEnded, setCharEnded] = useState(false);
 
@@ -22,10 +20,10 @@ const CharacterList = (props) => {
 
   const itemRefs = useRef([]);
 
-  const marvelService = new MarvelService();
+  const { loading, error, getAllCharacters } = useMarvelService();
 
   useEffect(() => {
-    onRequest(); 
+    onRequest(offset, true);
     // Can invoke arrow function because CallBack is invoked after render
   }, []);
 
@@ -36,24 +34,14 @@ const CharacterList = (props) => {
     }
 
     setCharList((prevCharList) => [...prevCharList, ...res]);
-    setLoading(false);
     setloadingNewItem(false);
     setOffset((prevOffset) => prevOffset + 9);
     setCharEnded(ended);
   };
 
-  const onListLoading = () => {
-    setloadingNewItem(true);
-  };
-
-  const onError = (e) => {
-    setLoading(false);
-    setError(true);
-  };
-
-  const onRequest = (offset) => {
-    onListLoading();
-    marvelService.getAllCharacters(offset).then(onListLoaded).catch(onError);
+  const onRequest = (offset, initial) => {
+    initial ? setloadingNewItem(false) : setloadingNewItem(true);
+    getAllCharacters(offset).then(onListLoaded);
   };
 
   const items = charList.map(({ id, name, thumbnail }, index) => {
@@ -82,7 +70,13 @@ const CharacterList = (props) => {
 
   return (
     <div>
-      {loading ? <Spinner /> : error ? <ErrorMessage /> : <Grid>{items}</Grid>}
+      {loading && !loadingNewItem ? (
+        <Spinner />
+      ) : error ? (
+        <ErrorMessage />
+      ) : (
+        <Grid>{items}</Grid>
+      )}
       {charEnded ? null : (
         <ButtonLong
           onClick={() => onRequest(offset)}

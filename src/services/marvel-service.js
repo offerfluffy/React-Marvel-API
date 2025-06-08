@@ -1,41 +1,33 @@
-class MarvelService {
-  _apiBase = "https://gateway.marvel.com:443/v1/public/";
-  _apiKey = `apikey=${process.env.REACT_APP_API_KEY}`;
-  _baseOffsetChar = 291;
+import { useHttp } from "../hooks/http.hook";
 
-  getResource = async (url) => {
-    let res = await fetch(url);
+const useMarvelService = () => {
+  const { loading, requset, error, clearError } = useHttp();
 
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${url}, status: ${res.status}`);
-    }
+  const _apiBase = "https://gateway.marvel.com:443/v1/public/";
+  const _apiKey = `apikey=${process.env.REACT_APP_API_KEY}`;
+  const _baseOffsetChar = 291;
 
-    return await res.json();
-  };
-
-  getAllCharacters = async (offset = this._baseOffsetChar, limit = 9) => {
-    const res = await this.getResource(
-      `${this._apiBase}characters?limit=${limit}&offset=${offset}&${this._apiKey}`
+  const getAllCharacters = async (offset = _baseOffsetChar, limit = 9) => {
+    const res = await requset(
+      `${_apiBase}characters?limit=${limit}&offset=${offset}&${_apiKey}`
     );
-    return res.data.results.map(this._transfromCharacter);
+    return res.data.results.map(_transfromCharacter);
   };
 
-  getCharacter = async (id) => {
-    const res = await this.getResource(
-      `${this._apiBase}characters/${id}?${this._apiKey}`
-    );
-    return this._transfromCharacter(res.data.results[0]);
+  const getCharacter = async (id) => {
+    const res = await requset(`${_apiBase}characters/${id}?${_apiKey}`);
+    return _transfromCharacter(res.data.results[0]);
   };
 
-  getComics = async (offset = this._baseOffsetChar, limit = 9) => {
-    const res = await this.getResource(
-      `${this._apiBase}comics/?limit=${limit}&offset=${offset}&${this._apiKey}`
+  const getComics = async (offset = _baseOffsetChar, limit = 8) => {
+    const res = await requset(
+      `${_apiBase}comics/?limit=${limit}&offset=${offset}&${_apiKey}`
     );
 
-    return res.data.results.map(this._transfromComics);
+    return res.data.results.map(_transfromComics);
   };
 
-  _transfromCharacter = (char) => ({
+  const _transfromCharacter = (char) => ({
     id: char.id,
     name: char.name,
     description: char.description,
@@ -45,7 +37,7 @@ class MarvelService {
     comics: char.comics.items,
   });
 
-  _transfromComics = (comics) => ({
+  const _transfromComics = (comics) => ({
     id: comics.id,
     title: comics.title,
     description: comics.description,
@@ -53,6 +45,15 @@ class MarvelService {
     language: comics.textObjects.languages,
     price: comics.prices[0].price,
   });
-}
 
-export default MarvelService;
+  return {
+    loading,
+    error,
+    getAllCharacters,
+    getCharacter,
+    getComics,
+    clearError,
+  };
+};
+
+export default useMarvelService;

@@ -15,16 +15,14 @@ import ErrorMessage from "../error-message/error-message.jsx";
 
 import PropTypes from "prop-types";
 
-import MarvelService from "../../services/marvel-service.js";
+import useMarvelService from "../../services/marvel-service.js";
 
 import { useState, useEffect } from "react";
 
 const CharacterInfo = ({ selectedId }) => {
   const [char, setChar] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
-  const marvelService = new MarvelService();
+  const { loading, error, getCharacter, clearError } = useMarvelService();
 
   useEffect(() => {
     if (selectedId) {
@@ -34,24 +32,13 @@ const CharacterInfo = ({ selectedId }) => {
 
   const onInfoLoaded = (char) => {
     setChar(char);
-    setLoading(false);
-  };
-
-  const onError = () => {
-    setLoading(false);
-    setError(true);
   };
 
   const updateInfo = (id) => {
-    setLoading(true);
-    setError(false);
-
-    marvelService
-      .getCharacter(id)
-      .then((char) => {
-        onInfoLoaded(char);
-      })
-      .catch(onError);
+    clearError();
+    getCharacter(id).then((char) => {
+      onInfoLoaded(char);
+    });
   };
 
   const { comics } = char;
@@ -62,7 +49,7 @@ const CharacterInfo = ({ selectedId }) => {
 
   return (
     <CharacterInfoWrapper>
-      {loading ? (
+      {!items || loading ? (
         <Skeleton />
       ) : error ? (
         <ErrorMessage />
