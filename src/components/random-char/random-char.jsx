@@ -1,5 +1,3 @@
-import { Component } from "react";
-
 import {
   RandomCharWrapper,
   Dynamic,
@@ -21,78 +19,74 @@ import ErrorMessage from "../error-message/error-message.jsx";
 
 import MarvelService from "../../services/marvel-service.js";
 
-class RandomChar extends Component {
-  state = {
-    char: {},
-    loading: true,
-    error: false,
+import { useState, useEffect } from "react";
+
+const RandomChar = () => {
+  const [char, setChar] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  const marvelService = new MarvelService();
+
+  useEffect(() => {
+    updateChar();
+    const intervalId = setInterval(updateChar, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  const onCharLoaded = (char) => {
+    setChar(char);
+    setLoading(false);
   };
 
-  marvelService = new MarvelService();
-
-  componentDidMount() {
-    this.updateChar();
-  }
-
-  onCharLoaded = (char) => {
-    this.setState({ char, loading: false });
+  const onError = (e) => {
+    setLoading(false);
+    setError(true);
   };
 
-  onError = (e) => {
-    this.setState({ loading: false, error: true });
-  };
-
-  updateChar = () => {
-    this.setState({ loading: true, error: false });
+  const updateChar = () => {
+    setLoading(true);
+    setError(false);
 
     const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-    this.marvelService
-      .getCharacter(id)
-      .then(this.onCharLoaded)
-      .catch(this.onError);
+    marvelService.getCharacter(id).then(onCharLoaded).catch(onError);
   };
 
-  render() {
-    const { char, loading, error } = this.state;
-
-    return (
-      <RandomCharWrapper>
-        {loading ? (
-          <Spinner />
-        ) : error ? (
-          <ErrorMessage />
-        ) : (
-          <View char={char} />
-        )}
-        <Static>
-          <Title>
-            Random character for today!
-            <br />
-            Do you want to get to know him better?
-          </Title>
-          <Title>Or choose another one</Title>
-          <Button onClick={this.updateChar} href="#" $type="main">
-            <div className="inner">try it</div>
-          </Button>
-          <Decoration src={mjolnir} alt="mjolnir" />
-        </Static>
-      </RandomCharWrapper>
-    );
-  }
-}
+  return (
+    <RandomCharWrapper>
+      {loading ? <Spinner /> : error ? <ErrorMessage /> : <View char={char} />}
+      <Static>
+        <Title>
+          Random character for today!
+          <br />
+          Do you want to get to know him better?
+        </Title>
+        <Title>Or choose another one</Title>
+        <Button onClick={updateChar} href="#" $type="main">
+          <div className="inner">try it</div>
+        </Button>
+        <Decoration src={mjolnir} alt="mjolnir" />
+      </Static>
+    </RandomCharWrapper>
+  );
+};
 
 function View({ char }) {
   const { name, description, thumbnail, homepage, wiki } = char;
-  
-  const shorten = (text, max = 100) =>
+
+  const shorten = (text, max = 250) =>
     text && text.length > max ? text.slice(0, max) + "..." : text;
+
   const noImage =
     thumbnail ===
     "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
 
   return (
     <Dynamic>
-      <Image src={thumbnail} alt="Random character" $contain={noImage}/>
+      <Image src={thumbnail} alt="Random character" $contain={noImage} />
       <Info>
         <Name>{name}</Name>
         <Description>

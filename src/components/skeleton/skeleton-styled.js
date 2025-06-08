@@ -43,4 +43,10 @@ const Block = styled(Pulse)`
   margin-top: 15px;
 `;
 
-export { Header, Circle, Mini, Block };
+const Title = styled.h2`
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 15px;
+`;
+
+export { Header, Circle, Mini, Block, Title };

@@ -1,8 +1,9 @@
-import { Header, Circle, Mini, Block } from "./skeleton-styled";
+import { Header, Circle, Mini, Block, Title } from "./skeleton-styled";
 
 function Skeleton() {
   return (
     <div>
+      <Title>Please select a character</Title>
       <Header>
         <Circle></Circle>
         <Mini></Mini>

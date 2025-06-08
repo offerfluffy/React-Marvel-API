@@ -15,72 +15,63 @@ import ErrorMessage from "../error-message/error-message.jsx";
 
 import PropTypes from "prop-types";
 
-import { Component } from "react";
-
 import MarvelService from "../../services/marvel-service.js";
 
-class CharacterInfo extends Component {
-  state = {
-    char: {},
-    loading: true,
-    error: false,
-  };
+import { useState, useEffect } from "react";
 
-  marvelService = new MarvelService();
+const CharacterInfo = ({ selectedId }) => {
+  const [char, setChar] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  componentDidUpdate(prevProps) {
-    if (
-      this.props.selectedId !== prevProps.selectedId &&
-      this.props.selectedId
-    ) {
-      this.updateInfo(this.props.selectedId);
+  const marvelService = new MarvelService();
+
+  useEffect(() => {
+    if (selectedId) {
+      updateInfo(selectedId);
     }
-  }
+  }, [selectedId]);
 
-  onInfoLoaded = (char) => {
-    this.setState({ char, loading: false });
+  const onInfoLoaded = (char) => {
+    setChar(char);
+    setLoading(false);
   };
 
-  onError = () => {
-    this.setState({ loading: false, error: true });
+  const onError = () => {
+    setLoading(false);
+    setError(true);
   };
 
-  updateInfo = (id) => {
-    this.setState({ loading: true, error: false });
+  const updateInfo = (id) => {
+    setLoading(true);
+    setError(false);
 
-    this.marvelService
+    marvelService
       .getCharacter(id)
       .then((char) => {
-        this.onInfoLoaded(char);
+        onInfoLoaded(char);
       })
-      .catch(this.onError);
+      .catch(onError);
   };
 
-  render() {
-    const {
-      char,
-      char: { comics },
-      loading,
-      error,
-    } = this.state;
+  const { comics } = char;
 
-    const items = comics
-      ?.slice(0, 10) // ?. avoids runtime errors if comics is undefined
-      .map((item, i) => <ComicsItem key={i}>{item.name}</ComicsItem>);
+  const items = comics
+    ?.slice(0, 10) // ?. avoids runtime errors if comics is undefined
+    .map((item, i) => <ComicsItem key={i}>{item.name}</ComicsItem>);
 
-    return (
-      <CharacterInfoWrapper>
-        {loading ? (
-          <Skeleton />
-        ) : error ? (
-          <ErrorMessage />
-        ) : (
-          <View char={char} items={items} />
-        )}
-      </CharacterInfoWrapper>
-    );
-  }
-}
+  return (
+    <CharacterInfoWrapper>
+      {loading ? (
+        <Skeleton />
+      ) : error ? (
+        <ErrorMessage />
+      ) : (
+        <View char={char} items={items} />
+      )}
+    </CharacterInfoWrapper>
+  );
+};
 
 function View({
   char: { thumbnail, name, homepage, wiki, description },
