@@ -1,21 +1,27 @@
 import { Header, Title, Menu } from "./app-header-styled";
 
+import { Link, NavLink } from "react-router-dom";
+
 function AppHeader() {
   return (
     <Header>
       <Title>
-        <a href="#">
+        <Link to="/">
           <span>Marvel</span> information portal
-        </a>
+        </Link>
       </Title>
       <Menu>
         <ul>
           <li>
-            <a href="#">Characters</a>
+            <NavLink exact activeStyle={{ color: "#9f0013" }} to="/">
+              Characters
+            </NavLink>
           </li>
           /
           <li>
-            <a href="#">Comics</a>
+            <NavLink exact activeStyle={{ color: "#9f0013" }} to="/comics">
+              Comics
+            </NavLink>
           </li>
         </ul>
       </Menu>

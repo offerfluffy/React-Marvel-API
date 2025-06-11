@@ -1,48 +1,33 @@
-import AppBanner from "../app-banner/app-banner";
 import AppHeader from "../app-header/app-header";
-import CharacterInfo from "../character-info/character-info";
-import CharacterList from "../characters-list/characters-list";
-import ComicsList from "../comics-list/comics-list";
-import RandomChar from "../random-char/random-char";
 import SingleComics from "../single-comics/single-comics";
-import ErrorBoundary from "../error-boundary/error-boundary";
-import { MainWrapper, CharactersWrapper, Decoration } from "./app-styled";
 
-import vision from "../../resources/img/vision.png";
+import { MainWrapper } from "./app-styled";
 
-import { useState } from "react";
+import MainPage from "../pages/main-page";
+import ComicsPage from "../pages/comics-page";
+
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const App = () => {
-  const [selectedId, setSelectedId] = useState(null);
-
-  const onSelectChar = (id) => {
-    setSelectedId(id);
-  };
-
   return (
-    <>
+    <Router>
       <AppHeader />
       <MainWrapper>
-        <RandomChar />
-        <CharactersWrapper>
-          <CharacterList onSelectChar={onSelectChar} />
-          <ErrorBoundary>
-            <CharacterInfo selectedId={selectedId} />
-          </ErrorBoundary>
-        </CharactersWrapper>
-        <Decoration src={vision} />
+        <Switch>
+          <Route exact path="/">
+            <MainPage />
+          </Route>
+          <Route exact path="/comics">
+            <ComicsPage />
+          </Route>
+        </Switch>
       </MainWrapper>
 
       {/* <MainWrapper>
-          <AppBanner />
-          <ComicsList />
-        </MainWrapper>
-  
-        <MainWrapper>
-          <AppBanner />
-          <SingleComics />
-        </MainWrapper> */}
-    </>
+        <AppBanner />
+        <SingleComics />
+      </MainWrapper> */}
+    </Router>
   );
 };
 

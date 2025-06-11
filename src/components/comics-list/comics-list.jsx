@@ -7,75 +7,78 @@ import {
 } from "./comics-list-styled";
 import { ButtonLong } from "../../style/button/button-styled";
 
-import uw from "../../resources/img/UW.png";
-import xMen from "../../resources/img/x-men.png";
+import Spinner from "../spinner/spinner";
+import ErrorMessage from "../error-message/error-message.jsx";
 
-function ComicsList() {
+import useMarvelService from "../../services/marvel-service";
+
+import { useEffect, useState } from "react";
+
+function ComicsList(props) {
+  const [comicsList, setComicsList] = useState([]);
+  const [offset, setOffset] = useState(291);
+  const [loadingNewItems, setLoadingNewItems] = useState(false);
+  const [comicsEnded, setComicsEnded] = useState(false);
+  const { onSelectComics } = props;
+
+  const { loading, error, getAllComics } = useMarvelService();
+
+  useEffect(() => {
+    onRequest(offset, true);
+  }, []);
+
+  const onListLoaded = (res) => {
+    let ended = false;
+    if (res.length < 8) {
+      ended = true;
+    }
+
+    setComicsList((prevComicsList) => [...prevComicsList, ...res]);
+    setLoadingNewItems(false);
+    setOffset((prevOffset) => prevOffset + 8);
+    setComicsEnded(ended);
+  };
+
+  const onRequest = (offset, initial) => {
+    initial ? setLoadingNewItems(false) : setLoadingNewItems(true);
+    getAllComics(offset).then(onListLoaded);
+  };
+
+  const items = comicsList?.map(({ id, title, price, thumbnail }, i) => {
+    return (
+      <Item onClick={() => onSelectComics(id)} key={i}>
+        <a href="#">
+          <img src={thumbnail} alt={title} className="comics__item-img" />
+          <Name>{title}</Name>
+          <Price>{price}$</Price>
+        </a>
+      </Item>
+    );
+  });
+
   return (
     <ComicsListWrapper>
-      <Grid>
-        <Item>
-          <a href="#">
-            <img src={uw} alt="ultimate war" class="comics__item-img" />
-            <Name>ULTIMATE X-MEN VOL. 5: ULTIMATE WAR TPB</Name>
-            <Price>9.99$</Price>
-          </a>
-        </Item>
-        <li class="comics__item">
-          <a href="#">
-            <img src={xMen} alt="x-men" class="comics__item-img" />
-            <Name>X-Men: Days of Future Past</Name>
-            <Price>NOT AVAILABLE</Price>
-          </a>
-        </li>
-        <li class="comics__item">
-          <a href="#">
-            <img src={uw} alt="ultimate war" class="comics__item-img" />
-            <Name>ULTIMATE X-MEN VOL. 5: ULTIMATE WAR TPB</Name>
-            <Price>9.99$</Price>
-          </a>
-        </li>
-        <li class="comics__item">
-          <a href="#">
-            <img src={xMen} alt="x-men" class="comics__item-img" />
-            <Name>X-Men: Days of Future Past</Name>
-            <Price>9.99$</Price>
-          </a>
-        </li>
-        <li class="comics__item">
-          <a href="#">
-            <img src={uw} alt="ultimate war" class="comics__item-img" />
-            <Name>ULTIMATE X-MEN VOL. 5: ULTIMATE WAR TPB</Name>
-            <Price>9.99$</Price>
-          </a>
-        </li>
-        <li class="comics__item">
-          <a href="#">
-            <img src={uw} alt="x-men" class="comics__item-img" />
-            <Name>X-Men: Days of Future Past</Name>
-            <Price>NOT AVAILABLE</Price>
-          </a>
-        </li>
-        <li class="comics__item">
-          <a href="#">
-            <img src={uw} alt="ultimate war" class="comics__item-img" />
-            <Name>ULTIMATE X-MEN VOL. 5: ULTIMATE WAR TPB</Name>
-            <Price>9.99$</Price>
-          </a>
-        </li>
-        <Item>
-          <a href="#">
-            <img src={xMen} alt="x-men" class="comics__item-img" />
-            <Name>X-Men: Days of Future Past</Name>
-            <Price>NOT AVAILABLE</Price>
-          </a>
-        </Item>
-      </Grid>
-      <ButtonLong>
-        <div className="inner">load more</div>
-      </ButtonLong>
+      {loading && !loadingNewItems ? (
+        <Spinner />
+      ) : error ? (
+        <ErrorMessage />
+      ) : (
+        <View items={items} />
+      )}
+      {comicsEnded ? null : (
+        <ButtonLong
+          onClick={() => onRequest(offset, false)}
+          disabled={loadingNewItems}
+        >
+          <div className="inner">load more</div>
+        </ButtonLong>
+      )}
     </ComicsListWrapper>
   );
+}
+
+function View({ items }) {
+  return <Grid>{items}</Grid>;
 }
 
 export default ComicsList;

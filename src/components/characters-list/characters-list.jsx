@@ -32,7 +32,7 @@ const CharacterList = (props) => {
     if (res.length < 9) {
       ended = true;
     }
-
+ 
     setCharList((prevCharList) => [...prevCharList, ...res]);
     setloadingNewItem(false);
     setOffset((prevOffset) => prevOffset + 9);

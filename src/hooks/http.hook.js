@@ -4,7 +4,7 @@ export const useHttp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const requset = useCallback(
+  const request = useCallback(
     async (
       url,
       method = "GET",
@@ -35,5 +35,5 @@ export const useHttp = () => {
 
   const clearError = useCallback(() => setError(null), []);
 
-  return { loading, requset, error, clearError };
+  return { loading, request, error, clearError };
 };
