@@ -1,9 +1,7 @@
 {
   "files": {
     "main.css": "/React-Marvel-API/static/css/main.df298829.css",
-    "main.js": "/React-Marvel-API/static/js/main.838c87f2.js",
-    "static/media/x-men.png": "/React-Marvel-API/static/media/x-men.41b39e1944f148b7a123.png",
-    "static/media/UW.png": "/React-Marvel-API/static/media/UW.422636b41d853d832a20.png",
+    "main.js": "/React-Marvel-API/static/js/main.9418b4ec.js",
     "static/media/vision.png": "/React-Marvel-API/static/media/vision.067d4ae1936d64a577ce.png",
     "static/media/mjolnir.png": "/React-Marvel-API/static/media/mjolnir.61f31e1809f12183a524.png",
     "static/media/Avengers.png": "/React-Marvel-API/static/media/Avengers.4065c8f9c94e3d8b039a.png",
@@ -11,10 +9,10 @@
     "static/media/Avengers_logo.png": "/React-Marvel-API/static/media/Avengers_logo.9eaf219344d83362e830.png",
     "index.html": "/React-Marvel-API/index.html",
     "main.df298829.css.map": "/React-Marvel-API/static/css/main.df298829.css.map",
-    "main.838c87f2.js.map": "/React-Marvel-API/static/js/main.838c87f2.js.map"
+    "main.9418b4ec.js.map": "/React-Marvel-API/static/js/main.9418b4ec.js.map"
   },
   "entrypoints": [
     "static/css/main.df298829.css",
-    "static/js/main.838c87f2.js"
+    "static/js/main.9418b4ec.js"
   ]
 }
