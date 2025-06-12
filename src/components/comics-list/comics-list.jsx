@@ -13,13 +13,13 @@ import ErrorMessage from "../error-message/error-message.jsx";
 import useMarvelService from "../../services/marvel-service";
 
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function ComicsList(props) {
   const [comicsList, setComicsList] = useState([]);
   const [offset, setOffset] = useState(291);
   const [loadingNewItems, setLoadingNewItems] = useState(false);
   const [comicsEnded, setComicsEnded] = useState(false);
-  const { onSelectComics } = props;
 
   const { loading, error, getAllComics } = useMarvelService();
 
@@ -46,12 +46,12 @@ function ComicsList(props) {
 
   const items = comicsList?.map(({ id, title, price, thumbnail }, i) => {
     return (
-      <Item onClick={() => onSelectComics(id)} key={i}>
-        <a href="#">
+      <Item key={i}>
+        <Link to={`/comics/${id}`}>
           <img src={thumbnail} alt={title} className="comics__item-img" />
           <Name>{title}</Name>
           <Price>{price}$</Price>
-        </a>
+        </Link>
       </Item>
     );
   });

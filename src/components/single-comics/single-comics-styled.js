@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const SingleComicsWrapper = styled.div`
   margin-top: 50px;
-  display: grid;
+  display: ${(props) => (props.$loading ? "block" : "grid")};
   grid-template-columns: 293px 550px auto;
   column-gap: 50px;
   align-items: start;
@@ -34,7 +35,7 @@ const Price = styled.p`
   margin-top: 25px;
 `;
 
-const Back = styled.a`
+const Back = styled(Link)`
   justify-self: end;
   font-weight: bold;
   font-size: 18px;
