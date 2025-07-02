@@ -11,6 +11,8 @@ import PropTypes from "prop-types";
 import { useState, useEffect, useRef } from "react";
 
 const CharacterList = (props) => {
+  const { loading, error, getAllCharacters, isFallback } = useMarvelService();
+
   const [charList, setCharList] = useState([]);
   const [loadingNewItem, setloadingNewItem] = useState(false);
   const [offset, setOffset] = useState(291);
@@ -19,8 +21,6 @@ const CharacterList = (props) => {
   const { onSelectChar } = props;
 
   const itemRefs = useRef([]);
-
-  const { loading, error, getAllCharacters } = useMarvelService();
 
   useEffect(() => {
     onRequest(offset, true);
@@ -32,7 +32,7 @@ const CharacterList = (props) => {
     if (res.length < 9) {
       ended = true;
     }
- 
+
     setCharList((prevCharList) => [...prevCharList, ...res]);
     setloadingNewItem(false);
     setOffset((prevOffset) => prevOffset + 9);
@@ -77,7 +77,7 @@ const CharacterList = (props) => {
       ) : (
         <Grid>{items}</Grid>
       )}
-      {charEnded ? null : (
+      {charEnded || isFallback ? null : (
         <ButtonLong
           onClick={() => onRequest(offset)}
           disabled={loadingNewItem}

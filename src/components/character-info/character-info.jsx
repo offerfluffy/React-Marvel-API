@@ -44,8 +44,12 @@ const CharacterInfo = ({ selectedId }) => {
   const { comics } = char;
 
   const items = comics
-    ?.slice(0, 10) // ?. avoids runtime errors if comics is undefined
-    .map((item, i) => <ComicsItem key={i}>{item.name}</ComicsItem>);
+    ?.slice(0, 10)
+    .map((item, i) => (
+      <ComicsItem key={i}>
+        {typeof item === "string" ? item : item.name}
+      </ComicsItem>
+    ));
 
   return (
     <CharacterInfoWrapper>

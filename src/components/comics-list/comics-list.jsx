@@ -16,12 +16,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function ComicsList(props) {
+  const { loading, error, getAllComics, isFallback } = useMarvelService();
+
   const [comicsList, setComicsList] = useState([]);
   const [offset, setOffset] = useState(291);
   const [loadingNewItems, setLoadingNewItems] = useState(false);
   const [comicsEnded, setComicsEnded] = useState(false);
-
-  const { loading, error, getAllComics } = useMarvelService();
 
   useEffect(() => {
     onRequest(offset, true);
@@ -65,7 +65,7 @@ function ComicsList(props) {
       ) : (
         <View items={items} />
       )}
-      {comicsEnded ? null : (
+      {comicsEnded || isFallback ? null : (
         <ButtonLong
           onClick={() => onRequest(offset, false)}
           disabled={loadingNewItems}

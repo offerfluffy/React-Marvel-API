@@ -1,36 +1,105 @@
 import { useHttp } from "../hooks/http.hook";
+import { useState } from "react";
 
 const useMarvelService = () => {
   const { loading, request, error, clearError } = useHttp();
+  const [isFallback, setIsFallback] = useState(false);
 
-  const _apiBase = "https://gateway.marvel.com:443/v1/public/";
-  const _apiKey = `apikey=${process.env.REACT_APP_API_KEY}`;
-  const _baseOffsetChar = 291;
+  const _API = {
+    base: "https://gateway.marvel.com/v1/public/",
+    fallback: "https://marvel-server-zeta.vercel.app/",
+    key: `apikey=${process.env.REACT_APP_PUBLIC_API_KEY}`,
+    fallbackKey: `apikey=${process.env.REACT_APP_FALLBACK_API_KEY}`,
+    baseOffset: 0,
+  };
 
-  const getAllCharacters = async (offset = _baseOffsetChar, limit = 9) => {
-    const res = await request(
-      `${_apiBase}characters?limit=${limit}&offset=${offset}&${_apiKey}`
-    );
-    return res.data.results.map(_transfromCharacter);
+  const getAllCharacters = async (offset = _API.baseOffset, limit = 9) => {
+    try {
+      const res = await request(
+        `${_API.base}characters?limit=${limit}&offset=${offset}&${_API.key}`,
+        true
+      );
+      setIsFallback(false);
+      return res.data.results.map(_transfromCharacter);
+    } catch {
+      clearError();
+      setIsFallback(true);
+      const res = await request(
+        `${_API.fallback}characters?limit=${limit}&${_API.fallbackKey}`
+      );
+      return res.data.results.map(_transfromCharacter);
+    }
   };
 
   const getCharacter = async (id) => {
-    const res = await request(`${_apiBase}characters/${id}?${_apiKey}`);
-    return _transfromCharacter(res.data.results[0]);
+    try {
+      const res = await request(
+        `${_API.base}characters/${id}?${_API.key}`,
+        true
+      );
+      setIsFallback(false);
+      return _transfromCharacter(res.data.results[0]);
+    } catch {
+      clearError();
+      setIsFallback(true);
+      const res = await request(
+        `${_API.fallback}characters/${id}?${_API.fallbackKey}`
+      );
+      return _transfromCharacter(res.data.results[0]);
+    }
   };
 
-  const getAllComics = async (offset = _baseOffsetChar, limit = 8) => {
-    const res = await request(
-      `${_apiBase}comics/?limit=${limit}&offset=${offset}&${_apiKey}`
-    );
+  const getRandomCharacter = async () => {
+    try {
+      const id = Math.floor(Math.random() * 400) + 1011000;
+      const res = await request(
+        `${_API.base}characters/${id}?${_API.key}`,
+        true
+      );
+      setIsFallback(false);
+      return _transfromCharacter(res.data.results[0]);
+    } catch {
+      clearError();
+      setIsFallback(true);
+      const fallbackId = Math.floor(Math.random() * 20) + 1;
+      const res = await request(
+        `${_API.fallback}characters/${fallbackId}?${_API.fallbackKey}`
+      );
+      return _transfromCharacter(res.data.results[0]);
+    }
+  };
 
-    return res.data.results.map(_transfromComics);
+  const getAllComics = async (offset = _API.baseOffset, limit = 8) => {
+    try {
+      const res = await request(
+        `${_API.base}comics/?limit=${limit}&offset=${offset}&${_API.key}`,
+        true
+      );
+      setIsFallback(false);
+      return res.data.results.map(_transfromComics);
+    } catch {
+      clearError();
+      setIsFallback(true);
+      const res = await request(
+        `${_API.fallback}comics/?limit=${limit}&${_API.fallbackKey}`
+      );
+      return res.data.results.map(_transfromComics);
+    }
   };
 
   const getComics = async (id) => {
-    const res = await request(`${_apiBase}comics/${id}?${_apiKey}`);
-    console.log(res);
-    return _transfromComics(res.data.results[0]);
+    try {
+      const res = await request(`${_API.base}comics/${id}?${_API.key}`, true);
+      setIsFallback(false);
+      return _transfromComics(res.data.results[0]);
+    } catch {
+      clearError();
+      setIsFallback(true);
+      const res = await request(
+        `${_API.fallback}comics/${id}?${_API.fallbackKey}`
+      );
+      return _transfromComics(res.data.results[0]);
+    }
   };
 
   const _transfromCharacter = (char) => ({
@@ -50,7 +119,7 @@ const useMarvelService = () => {
     thumbnail: comics.thumbnail.path + "." + comics.thumbnail.extension,
     language: comics.textObjects.languages,
     price: comics.prices[0].price,
-    pages: comics.pageCount
+    pages: comics.pageCount,
   });
 
   return {
@@ -58,9 +127,11 @@ const useMarvelService = () => {
     error,
     getAllCharacters,
     getCharacter,
+    getRandomCharacter,
     getAllComics,
     getComics,
     clearError,
+    isFallback,
   };
 };
 
