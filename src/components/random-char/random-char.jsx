@@ -1,3 +1,5 @@
+import { useState, useEffect, useRef } from "react";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 import {
   RandomCharWrapper,
   Dynamic,
@@ -11,32 +13,28 @@ import {
   Decoration,
 } from "./random-char-styled";
 import { Button } from "../../style/button/button-styled.js";
-
+import "./random-char.css";
 import mjolnir from "../../resources/img/mjolnir.png";
-
 import Spinner from "../spinner/spinner";
 import ErrorMessage from "../error-message/error-message.jsx";
-
 import useMarvelService from "../../services/marvel-service.js";
 
-import { useState, useEffect } from "react";
-
 const RandomChar = () => {
-  const [char, setChar] = useState({});
+  const [char, setChar] = useState(null); // Initialize as null
+  const [transitionKey, setTransitionKey] = useState(0);
+  const nodeRef = useRef(null);
 
   const { loading, error, getRandomCharacter, clearError } = useMarvelService();
 
   useEffect(() => {
     updateChar();
     // const intervalId = setInterval(updateChar, 5000);
-
-    return () => {
-      // clearInterval(intervalId);
-    };
+    // return () => clearInterval(intervalId);
   }, []);
 
   const onCharLoaded = (char) => {
     setChar(char);
+    setTransitionKey((prev) => prev + 1);
   };
 
   const updateChar = () => {
@@ -46,7 +44,27 @@ const RandomChar = () => {
 
   return (
     <RandomCharWrapper>
-      {loading ? <Spinner /> : error ? <ErrorMessage /> : <View char={char} />}
+      <SwitchTransition mode="out-in">
+        <CSSTransition
+          key={loading ? "loading" : error ? "error" : transitionKey}
+          timeout={200}
+          classNames="char"
+          nodeRef={nodeRef}
+        >
+          <div ref={nodeRef}>
+            {loading ? (
+              <Spinner />
+            ) : error ? (
+              <ErrorMessage />
+            ) : (
+              <View
+                char={char}
+                animation={{ transitionKey, loading, error, nodeRef }}
+              />
+            )}
+          </div>
+        </CSSTransition>
+      </SwitchTransition>
       <Static>
         <Title>
           Random character for today!
@@ -63,29 +81,30 @@ const RandomChar = () => {
   );
 };
 
-function View({ char }) {
-  const { name, description, thumbnail, homepage, wiki } = char;
+function View({ char, animation }) {
+  const { name, description, thumbnail, homepage, wiki } = char || {};
 
   const shorten = (text, max = 250) =>
     text && text.length > max ? text.slice(0, max) + "..." : text;
 
   const noImage =
+    thumbnail &&
     thumbnail ===
-    "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
+      "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
 
   return (
     <Dynamic>
-      <Image src={thumbnail} alt="Random character" $contain={noImage} />
+      <Image src={thumbnail || ""} alt="Random character" $contain={noImage} />
       <Info>
-        <Name>{name}</Name>
+        <Name>{name || "Unknown"}</Name>
         <Description>
           {description ? shorten(description) : "No description..."}
         </Description>
         <ButtonsWrapper>
-          <Button href={homepage} $type="main">
+          <Button href={homepage || "#"} $type="main">
             <div className="inner">homepage</div>
           </Button>
-          <Button href={wiki} $type="secondary">
+          <Button href={wiki || "#"} $type="secondary">
             <div className="inner">Wiki</div>
           </Button>
         </ButtonsWrapper>

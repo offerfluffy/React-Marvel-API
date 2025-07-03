@@ -1,0 +1,14 @@
+.char-enter {
+  opacity: 0;
+}
+.char-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.char-exit {
+  opacity: 1;
+}
+.char-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
