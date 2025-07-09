@@ -7,23 +7,32 @@ const CharacterSearchWrapper = styled.div`
   background-color: #fff;
 `;
 
-const Title = styled.div`
+const Text = styled.div`
   font-weight: bold;
   font-size: 18px;
   line-height: 24px;
-  margin-bottom: 10px;
+`;
+
+const Wrapper = styled.div`
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Match = styled(Text)`
+  color: #03710e;
 `;
 
 const Input = styled.input`
   padding: 15px 20px;
-  margin-right: 40px;
   width: 225px;
   border: none;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
   background-color: #fff;
 
   &:focus {
-    outline: none; 
+    outline: none;
   }
 `;
 
@@ -36,4 +45,11 @@ const Error = styled.div`
   color: #9f0013;
 `;
 
-export { CharacterSearchWrapper, Title, Input, Error };
+export {
+  CharacterSearchWrapper,
+  Text,
+  Input,
+  Match,
+  Wrapper,
+  Error,
+};

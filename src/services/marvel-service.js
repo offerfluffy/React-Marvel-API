@@ -3,7 +3,6 @@ import { useState } from "react";
 
 const useMarvelService = () => {
   const { loading, request, error, clearError } = useHttp();
-  const [isFallback, setIsFallback] = useState(false);
 
   const _API = {
     base: "https://gateway.marvel.com/v1/public/",
@@ -19,11 +18,9 @@ const useMarvelService = () => {
         `${_API.base}characters?limit=${limit}&offset=${offset}&${_API.key}`,
         true
       );
-      setIsFallback(false);
       return res.data.results.map(_transfromCharacter);
     } catch {
       clearError();
-      setIsFallback(true);
       const res = await request(
         `${_API.fallback}characters?limit=${limit}&${_API.fallbackKey}`
       );
@@ -37,13 +34,27 @@ const useMarvelService = () => {
         `${_API.base}characters/${id}?${_API.key}`,
         true
       );
-      setIsFallback(false);
       return _transfromCharacter(res.data.results[0]);
     } catch {
       clearError();
-      setIsFallback(true);
       const res = await request(
         `${_API.fallback}characters/${id}?${_API.fallbackKey}`
+      );
+      return _transfromCharacter(res.data.results[0]);
+    }
+  };
+
+  const getCharacterByName = async (name) => {
+    try {
+      const res = await request(
+        `${_API.base}characters?name=${name}&${_API.key}`,
+        true
+      );
+      return _transfromCharacter(res.data.results[0]);
+    } catch {
+      clearError();
+      const res = await request(
+        `${_API.fallback}characters?name=${name}&${_API.fallbackKey}`
       );
       return _transfromCharacter(res.data.results[0]);
     }
@@ -56,11 +67,9 @@ const useMarvelService = () => {
         `${_API.base}characters/${id}?${_API.key}`,
         true
       );
-      setIsFallback(false);
       return _transfromCharacter(res.data.results[0]);
     } catch {
       clearError();
-      setIsFallback(true);
       const fallbackId = Math.floor(Math.random() * 20) + 1;
       const res = await request(
         `${_API.fallback}characters/${fallbackId}?${_API.fallbackKey}`
@@ -75,11 +84,9 @@ const useMarvelService = () => {
         `${_API.base}comics/?limit=${limit}&offset=${offset}&${_API.key}`,
         true
       );
-      setIsFallback(false);
       return res.data.results.map(_transfromComics);
     } catch {
       clearError();
-      setIsFallback(true);
       const res = await request(
         `${_API.fallback}comics/?limit=${limit}&${_API.fallbackKey}`
       );
@@ -90,11 +97,9 @@ const useMarvelService = () => {
   const getComics = async (id) => {
     try {
       const res = await request(`${_API.base}comics/${id}?${_API.key}`, true);
-      setIsFallback(false);
       return _transfromComics(res.data.results[0]);
     } catch {
       clearError();
-      setIsFallback(true);
       const res = await request(
         `${_API.fallback}comics/${id}?${_API.fallbackKey}`
       );
@@ -102,15 +107,21 @@ const useMarvelService = () => {
     }
   };
 
-  const _transfromCharacter = (char) => ({
-    id: char.id,
-    name: char.name,
-    description: char.description,
-    thumbnail: char.thumbnail.path + "." + char.thumbnail.extension,
-    homepage: char.urls[0].url,
-    wiki: char.urls[1].url,
-    comics: char.comics.items,
-  });
+  const _transfromCharacter = (char) => {
+    if (!char) {
+      return null;
+    }
+
+    return {
+      id: char.id,
+      name: char.name,
+      description: char.description || "No description available",
+      thumbnail: `${char.thumbnail.path}.${char.thumbnail.extension}`,
+      homepage: char.urls?.[0]?.url || "#",
+      wiki: char.urls?.[1]?.url || "#",
+      comics: char.comics?.items || [],
+    };
+  };
 
   const _transfromComics = (comics) => ({
     id: comics.id,
@@ -127,11 +138,11 @@ const useMarvelService = () => {
     error,
     getAllCharacters,
     getCharacter,
+    getCharacterByName,
     getRandomCharacter,
     getAllComics,
     getComics,
     clearError,
-    isFallback,
   };
 };
 
