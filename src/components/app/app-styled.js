@@ -20,11 +20,23 @@ const CharactersWrapper = styled.div`
   align-items: start;
 `;
 
+const CharacterInfoWrapper = styled.div`
+  position: sticky;
+  top: 10px;
+  z-index: 5;
+`;
+
 const Decoration = styled.img`
   position: absolute;
   right: -174px;
   bottom: -70px;
   z-index: -1;
-`
+`;
 
-export { AppWrapper, MainWrapper, CharactersWrapper, Decoration };
+export {
+  AppWrapper,
+  MainWrapper,
+  CharactersWrapper,
+  Decoration,
+  CharacterInfoWrapper,
+};

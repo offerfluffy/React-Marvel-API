@@ -3,11 +3,16 @@ import CharacterInfo from "../character-info/character-info";
 import CharacterList from "../characters-list/characters-list";
 import ErrorBoundary from "../error-boundary/error-boundary";
 
-import { CharactersWrapper, Decoration } from "../app/app-styled.js";
+import {
+  CharactersWrapper,
+  Decoration,
+  CharacterInfoWrapper,
+} from "../app/app-styled.js";
 
 import vision from "../../resources/img/vision.png";
 
 import { useState } from "react";
+import CharacterSearch from "../character-search/character-search.jsx";
 
 function MainPage() {
   const [selectedId, setSelectedId] = useState(null);
@@ -21,9 +26,14 @@ function MainPage() {
       <RandomChar />
       <CharactersWrapper>
         <CharacterList onSelectChar={onSelectChar} />
-        <ErrorBoundary>
-          <CharacterInfo selectedId={selectedId} />
-        </ErrorBoundary>
+        <CharacterInfoWrapper>
+          <ErrorBoundary>
+            <CharacterInfo selectedId={selectedId} />
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <CharacterSearch />
+          </ErrorBoundary>
+        </CharacterInfoWrapper>
       </CharactersWrapper>
       <Decoration src={vision} />
     </>

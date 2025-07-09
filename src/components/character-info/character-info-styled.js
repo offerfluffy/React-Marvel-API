@@ -3,9 +3,6 @@ import styled from "styled-components";
 const CharacterInfoWrapper = styled.div`
   padding: 25px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
-  position: sticky;
-  top: 10px;
-  z-index: 5;
   background-color: #fff;
 `;
 
