@@ -27,4 +27,13 @@ const Input = styled.input`
   }
 `;
 
-export { CharacterSearchWrapper, Title, Input };
+const Error = styled.div`
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 24px;
+  margin-bottom: 10px;
+  color: #9f0013;
+`;
+
+export { CharacterSearchWrapper, Title, Input, Error };
