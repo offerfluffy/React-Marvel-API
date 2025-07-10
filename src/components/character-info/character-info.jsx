@@ -75,7 +75,7 @@ function View({
   return (
     <>
       <BasicsWrapper $contain={noImage}>
-        <img src={thumbnail} alt="abyss" />
+        <img src={thumbnail} alt={name} />
         <div>
           <Name>{name}</Name>
           <ButtonsWrapper>

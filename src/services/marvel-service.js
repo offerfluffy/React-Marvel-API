@@ -3,6 +3,7 @@ import { useState } from "react";
 
 const useMarvelService = () => {
   const { loading, request, error, clearError } = useHttp();
+  const [ isFallback, setIsFallBack ] = useState(false);
 
   const _API = {
     base: "https://gateway.marvel.com/v1/public/",
@@ -18,12 +19,14 @@ const useMarvelService = () => {
         `${_API.base}characters?limit=${limit}&offset=${offset}&${_API.key}`,
         true
       );
+      setIsFallBack(false);
       return res.data.results.map(_transfromCharacter);
     } catch {
       clearError();
       const res = await request(
         `${_API.fallback}characters?limit=${limit}&${_API.fallbackKey}`
       );
+      setIsFallBack(true);
       return res.data.results.map(_transfromCharacter);
     }
   };
@@ -118,8 +121,8 @@ const useMarvelService = () => {
       description: char.description,
       thumbnail: `${char.thumbnail.path}.${char.thumbnail.extension}`,
       homepage: char.urls?.[0]?.url,
-      wiki: char.urls?.[1]?.url ,
-      comics: char.comics?.items ,
+      wiki: char.urls?.[1]?.url,
+      comics: char.comics?.items,
     };
   };
 
@@ -143,6 +146,7 @@ const useMarvelService = () => {
     getAllComics,
     getComics,
     clearError,
+    isFallback,
   };
 };
 
