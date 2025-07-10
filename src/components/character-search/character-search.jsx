@@ -64,26 +64,23 @@ const CharacterSearch = () => {
             </Wrapper>
 
             <ErrorMessage component={Error} name="name" />
-
-            {submitted && !char && !loading ? (
-              <Error>
-                The character was not found. Check the name and try again
-              </Error>
-            ) : char && !error ? (
-              <Wrapper>
-                <Match>
-                  There is! Visit{" "}
-                  <Link to={`/character/${char.id}`}>{char.name}</Link> page?
-                </Match>
-                <Link to={`/character/${char.id}`}>
-                  <Button $type="secondary">
-                    <div className="inner">TO PAGE</div>
-                  </Button>
-                </Link>
-              </Wrapper>
-            ) : null}
           </Form>
         </Formik>
+        {submitted && !char && !loading ? (
+          <Error>
+            The character was not found. Check the name and try again
+          </Error>
+        ) : char && !error ? (
+          <Wrapper>
+            <Match>
+              There is! Visit{" "}
+              <Link to={`/character/${char.id}`}>{char.name}</Link> page?
+            </Match>
+            <Button as={Link} to={`/character/${char.id}`} $type="secondary">
+              <div className="inner">TO PAGE</div>
+            </Button>
+          </Wrapper>
+        ) : null}
       </div>
     </CharacterSearchWrapper>
   );
