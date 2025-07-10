@@ -2,6 +2,7 @@ import RandomChar from "../random-char/random-char";
 import CharacterInfo from "../character-info/character-info";
 import CharacterList from "../characters-list/characters-list";
 import ErrorBoundary from "../error-boundary/error-boundary";
+import CharacterSearch from "../character-search/character-search.jsx";
 
 import {
   CharactersWrapper,
@@ -12,7 +13,7 @@ import {
 import vision from "../../resources/img/vision.png";
 
 import { useState } from "react";
-import CharacterSearch from "../character-search/character-search.jsx";
+import { Helmet } from "react-helmet";
 
 function MainPage() {
   const [selectedId, setSelectedId] = useState(null);
@@ -23,6 +24,10 @@ function MainPage() {
 
   return (
     <>
+      <Helmet>
+        <meta name="description" content="Marvel information portal" />
+        <title>Marvel information portal</title>
+      </Helmet>
       <RandomChar />
       <CharactersWrapper>
         <CharacterList onSelectChar={onSelectChar} />

@@ -5,13 +5,14 @@ import { MainWrapper } from "./app-styled";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Spinner from "../spinner/spinner";
+import SinglePage from "../pages/single-page";
 
 const Page404 = lazy(() => import("../pages/404"));
 const MainPage = lazy(() => import("../pages/main-page"));
 const ComicsPage = lazy(() => import("../pages/comics-page"));
-const SingleComics = lazy(() => import("../single-comics/single-comics"));
+const SingleComics = lazy(() => import("../pages/single-comics/single-comics"));
 const SingleCharacter = lazy(() =>
-  import("../single-character/single-character")
+  import("../pages/single-character/single-character")
 );
 
 const App = () => {
@@ -23,10 +24,17 @@ const App = () => {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/comics" element={<ComicsPage />} />
-            <Route path="/comics/:comicsId" element={<SingleComics />} />
             <Route
-              path="/character/:characterId"
-              element={<SingleCharacter />}
+              path="/comics/:id"
+              element={
+                <SinglePage Component={SingleComics} dataType="comics" />
+              }
+            />
+            <Route
+              path="/character/:id"
+              element={
+                <SinglePage Component={SingleCharacter} dataType="character" />
+              }
             />
             <Route path="*" element={<Page404 />} />
           </Routes>
