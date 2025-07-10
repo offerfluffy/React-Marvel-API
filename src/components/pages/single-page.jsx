@@ -4,6 +4,7 @@ import useMarvelService from "../../services/marvel-service.js";
 import { Wrapper } from "../pages/single-comics/single-comics-styled.js";
 
 import { useState, useEffect } from "react";
+
 import Spinner from "../spinner/spinner.jsx";
 import ErrorMessage from "../error-message/error-message.jsx";
 

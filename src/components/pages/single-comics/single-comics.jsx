@@ -1,15 +1,16 @@
-import {
-  Name,
-  Description,
-  Back,
-  Price,
-} from "./single-comics-styled.js";
+import { Name, Description, Back, Price } from "./single-comics-styled.js";
+
+import { Helmet } from "react-helmet";
 
 function SingleComicsLayout({ data }) {
   const { title, description, thumbnail, price, language, pages } = data;
 
   return (
     <>
+      <Helmet>
+        <meta name="description" content={`${title} comics book`} />
+        <title>{title}</title>
+      </Helmet>
       <img src={thumbnail} alt={title} />
       <div>
         <Name>{title}</Name>
