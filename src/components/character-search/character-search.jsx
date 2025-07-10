@@ -21,6 +21,14 @@ const CharacterSearch = () => {
   const [char, setChar] = useState(null);
   const [submitted, setSubmitted] = useState(false);
 
+  const capitalizeEachWord = (str) => {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   return (
     <CharacterSearchWrapper>
       <Text>Or find a character by name:</Text>
@@ -38,7 +46,8 @@ const CharacterSearch = () => {
           onSubmit={(values) => {
             setSubmitted(true);
             clearError();
-            getCharacterByName(values.name).then((char) => setChar(char));
+            const name = capitalizeEachWord(values.name.trim());
+            getCharacterByName(name).then((char) => setChar(char));
           }}
         >
           <Form>
@@ -64,9 +73,9 @@ const CharacterSearch = () => {
               <Wrapper>
                 <Match>
                   There is! Visit{" "}
-                  <Link to={`/characters/${char.id}`}>{char.name}</Link> page?
+                  <Link to={`/character/${char.id}`}>{char.name}</Link> page?
                 </Match>
-                <Link to={`/characters/${char.id}`}>
+                <Link to={`/character/${char.id}`}>
                   <Button $type="secondary">
                     <div className="inner">TO PAGE</div>
                   </Button>
