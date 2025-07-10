@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const useMarvelService = () => {
   const { loading, request, error, clearError } = useHttp();
-  const [ isFallback, setIsFallBack ] = useState(false);
+  const [isFallback, setIsFallBack] = useState(false);
 
   const _API = {
     base: "https://gateway.marvel.com/v1/public/",
@@ -87,12 +87,14 @@ const useMarvelService = () => {
         `${_API.base}comics/?limit=${limit}&offset=${offset}&${_API.key}`,
         true
       );
+      setIsFallBack(false);
       return res.data.results.map(_transfromComics);
     } catch {
       clearError();
       const res = await request(
         `${_API.fallback}comics/?limit=${limit}&${_API.fallbackKey}`
       );
+      setIsFallBack(true);
       return res.data.results.map(_transfromComics);
     }
   };
@@ -126,15 +128,21 @@ const useMarvelService = () => {
     };
   };
 
-  const _transfromComics = (comics) => ({
-    id: comics.id,
-    title: comics.title,
-    description: comics.description,
-    thumbnail: comics.thumbnail.path + "." + comics.thumbnail.extension,
-    language: comics.textObjects.languages,
-    price: comics.prices[0].price,
-    pages: comics.pageCount,
-  });
+  const _transfromComics = (comics) => {
+    if (!comics) {
+      return null;
+    }
+
+    return {
+      id: comics.id,
+      title: comics.title,
+      description: comics.description,
+      thumbnail: comics.thumbnail.path + "." + comics.thumbnail.extension,
+      language: comics.textObjects.languages,
+      price: comics.prices[0].price,
+      pages: comics.pageCount,
+    };
+  };
 
   return {
     loading,
