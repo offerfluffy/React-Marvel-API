@@ -7,6 +7,10 @@ const AppBannerWrapper = styled.div`
   padding: 0 25px 0 45px;
   display: grid;
   grid-template-columns: 152px auto 133px;
+
+  @media (max-width: 500px) {
+    display: none
+  }
 `;
 
 const Text = styled.div`

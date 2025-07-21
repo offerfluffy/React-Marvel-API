@@ -12,6 +12,15 @@ const Wrapper = styled.div`
     width: 293px;
     height: 450px;
     object-fit: cover;
+
+    @media (max-width: 500px) {
+      justify-self: center;
+      margin-bottom: 50px
+    }
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -40,6 +49,10 @@ const Back = styled(Link)`
   font-weight: bold;
   font-size: 18px;
   line-height: 24px;
+
+  @media (max-width: 500px) {
+    justify-self: center;
+  }
 `;
 
 export { Wrapper, Name, Description, Price, Back };
