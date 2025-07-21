@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
-const CharacterInfoWrapper = styled.div`
+const Wrapper = styled.div`
   padding: 25px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
   background-color: #fff;
+
+  @media (max-width: 500px) {
+    grid-row: 1;
+  }
 `;
 
 const BasicsWrapper = styled.div`
@@ -53,7 +57,7 @@ const ComicsItem = styled.li`
 `;
 
 export {
-  CharacterInfoWrapper,
+  Wrapper,
   BasicsWrapper,
   ButtonsWrapper,
   Description,

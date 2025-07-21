@@ -1,5 +1,5 @@
 import {
-  CharacterInfoWrapper,
+  Wrapper,
   BasicsWrapper,
   ButtonsWrapper,
   Description,
@@ -52,7 +52,7 @@ const CharacterInfo = ({ selectedId }) => {
     ));
 
   return (
-    <CharacterInfoWrapper>
+    <Wrapper>
       {!items || loading ? (
         <Skeleton />
       ) : error ? (
@@ -60,7 +60,7 @@ const CharacterInfo = ({ selectedId }) => {
       ) : (
         <View char={char} items={items} />
       )}
-    </CharacterInfoWrapper>
+    </Wrapper>
   );
 };
 

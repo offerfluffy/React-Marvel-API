@@ -3,6 +3,11 @@ import styled from "styled-components";
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 500px) { 
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Title = styled.h1`

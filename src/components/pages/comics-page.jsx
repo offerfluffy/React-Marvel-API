@@ -6,10 +6,8 @@ function ComicsPage() {
   return (
     <>
       <Helmet>
-        <Helmet>
           <meta name="description" content="Marvel comics" />
           <title>Marvel comics</title>
-        </Helmet>
       </Helmet>
       <AppBanner />
       <ComicsList />

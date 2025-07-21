@@ -4,6 +4,11 @@ const RandomCharWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 50%);
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
+  overflow-x: hidden;
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const ButtonsWrapper = styled.div`
@@ -35,6 +40,7 @@ const Decoration = styled.img`
   position: absolute;
   bottom: 14px;
   right: -37px;
+  z-index: 2;
 `;
 
 const Info = styled.div`
@@ -42,6 +48,10 @@ const Info = styled.div`
   grid-template-rows: minmax(29px, auto) 90px 38px;
   row-gap: 10px;
   padding-top: 3px;
+
+  @media (max-width: 500px) {
+    grid-template-rows: 3fr;
+  }
 `;
 
 const Name = styled.p`
@@ -57,11 +67,13 @@ const Description = styled.p`
 `;
 
 const Title = styled.p`
+  position: relative;
   font-weight: bold;
   font-size: 24px;
   line-height: 32px;
   letter-spacing: -0.045em;
   color: #ffffff;
+  z-index: 3;
 
   &:nth-child(2) {
     margin: 20px 0;

@@ -1,4 +1,4 @@
-import { Grid, Item, Name } from "./characters-list-styled";
+import { Grid, Item, Name, Wrapper } from "./characters-list-styled";
 import { ButtonLong } from "../../style/button/button-styled";
 
 import Spinner from "../spinner/spinner";
@@ -69,7 +69,7 @@ const CharacterList = (props) => {
   });
 
   return (
-    <div>
+    <Wrapper>
       {loading && !loadingNewItem ? (
         <Spinner />
       ) : error ? (
@@ -86,7 +86,7 @@ const CharacterList = (props) => {
           <div className="inner">Load More</div>
         </ButtonLong>
       )}
-    </div>
+    </Wrapper>
   );
 };
 

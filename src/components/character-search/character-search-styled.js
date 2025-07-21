@@ -5,6 +5,11 @@ const CharacterSearchWrapper = styled.div`
   padding: 25px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
   background-color: #fff;
+
+  @media (max-width: 500px) {
+    margin-top: 30px;
+    margin-bottom: 60px;
+  }
 `;
 
 const Text = styled.div`
@@ -45,11 +50,4 @@ const Error = styled.div`
   color: #9f0013;
 `;
 
-export {
-  CharacterSearchWrapper,
-  Text,
-  Input,
-  Match,
-  Wrapper,
-  Error,
-};
+export { CharacterSearchWrapper, Text, Input, Match, Wrapper, Error };
