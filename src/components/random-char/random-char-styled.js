@@ -22,6 +22,10 @@ const Dynamic = styled.div`
   display: grid;
   grid-template-columns: 180px auto;
   column-gap: 30px;
+
+  @media (max-width: 500px) {
+    padding: 20px 20px;
+  }
 `;
 
 const Static = styled.div`
