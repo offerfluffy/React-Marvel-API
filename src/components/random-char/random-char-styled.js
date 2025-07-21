@@ -15,6 +15,12 @@ const ButtonsWrapper = styled.div`
   a:nth-child(1) {
     margin-right: 30px;
   }
+
+  @media (max-width: 500px) {
+    a:nth-child(1) {
+      margin-bottom: 10px;
+    }
+  }
 `;
 
 const Dynamic = styled.div`
@@ -25,6 +31,7 @@ const Dynamic = styled.div`
 
   @media (max-width: 500px) {
     padding: 20px 20px;
+    align-items: center;
   }
 `;
 
