@@ -1,10 +1,10 @@
 {
   "files": {
     "main.css": "/React-Marvel-API/static/css/main.df298829.css",
-    "main.js": "/React-Marvel-API/static/js/main.620a41a4.js",
+    "main.js": "/React-Marvel-API/static/js/main.60969f5d.js",
     "static/js/874.eea757cd.chunk.js": "/React-Marvel-API/static/js/874.eea757cd.chunk.js",
     "static/css/563.63823298.chunk.css": "/React-Marvel-API/static/css/563.63823298.chunk.css",
-    "static/js/563.87f99917.chunk.js": "/React-Marvel-API/static/js/563.87f99917.chunk.js",
+    "static/js/563.82475e17.chunk.js": "/React-Marvel-API/static/js/563.82475e17.chunk.js",
     "static/js/445.78aadc6c.chunk.js": "/React-Marvel-API/static/js/445.78aadc6c.chunk.js",
     "static/js/579.5a5222e6.chunk.js": "/React-Marvel-API/static/js/579.5a5222e6.chunk.js",
     "static/js/845.d4d96e2e.chunk.js": "/React-Marvel-API/static/js/845.d4d96e2e.chunk.js",
@@ -17,10 +17,10 @@
     "static/media/Avengers_logo.png": "/React-Marvel-API/static/media/Avengers_logo.9eaf219344d83362e830.png",
     "index.html": "/React-Marvel-API/index.html",
     "main.df298829.css.map": "/React-Marvel-API/static/css/main.df298829.css.map",
-    "main.620a41a4.js.map": "/React-Marvel-API/static/js/main.620a41a4.js.map",
+    "main.60969f5d.js.map": "/React-Marvel-API/static/js/main.60969f5d.js.map",
     "874.eea757cd.chunk.js.map": "/React-Marvel-API/static/js/874.eea757cd.chunk.js.map",
     "563.63823298.chunk.css.map": "/React-Marvel-API/static/css/563.63823298.chunk.css.map",
-    "563.87f99917.chunk.js.map": "/React-Marvel-API/static/js/563.87f99917.chunk.js.map",
+    "563.82475e17.chunk.js.map": "/React-Marvel-API/static/js/563.82475e17.chunk.js.map",
     "445.78aadc6c.chunk.js.map": "/React-Marvel-API/static/js/445.78aadc6c.chunk.js.map",
     "579.5a5222e6.chunk.js.map": "/React-Marvel-API/static/js/579.5a5222e6.chunk.js.map",
     "845.d4d96e2e.chunk.js.map": "/React-Marvel-API/static/js/845.d4d96e2e.chunk.js.map",
@@ -29,6 +29,6 @@
   },
   "entrypoints": [
     "static/css/main.df298829.css",
-    "static/js/main.620a41a4.js"
+    "static/js/main.60969f5d.js"
   ]
 }
